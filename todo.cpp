@@ -33,8 +33,9 @@ int printList(string doc){
 }
 
 int main(int argc, char *argv[]) {
-    const auto arguments = splitArgs(argc, argv);
-    const auto n_arguments = arguments.size();
-    printList(".todo");
-    return 0;
+  const string file = ".todo";
+  const auto arguments = splitArgs(argc, argv);
+  const auto n_arguments = arguments.size();
+  printList(file);
+  return 0;
 }
