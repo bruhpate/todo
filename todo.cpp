@@ -47,7 +47,6 @@ size_t countLines(string doc){
     file.close();
     return c;
 }
-   
 
 int overwrite(string doc, vector<string> overwrite_s){
     ofstream file;
@@ -66,7 +65,7 @@ int overwrite(string doc, vector<string> overwrite_s){
     for(size_t i = 0; i < overwrite_s.size(); i++){
         file << overwrite_s[i] << endl;
     }
-        file.close();
+    file.close();
     return 0;
 }
 
@@ -76,12 +75,11 @@ vector<string> splitFileRow(string doc){
 
     vector<string> s;
 
-    if(!file.is_open()){
+    if(!file.is_open())
         return s;
-    }
+    
 
     size_t lines = countLines(doc);
-
     string line;
 
 
@@ -89,7 +87,6 @@ vector<string> splitFileRow(string doc){
         s.push_back(line);
     }
     file.close();
-
     return s;
 }
 
