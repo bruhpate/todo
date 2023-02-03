@@ -47,60 +47,64 @@ size_t countLines(string doc){
     file.close();
     return c;
 }
+   
 
-//int swapLines(string doc, size_t line1, size_t line2){
-//    ofstream file;
-//    file.open(doc);
-//
-//    if(!file.is_open()){
-//        return 1;
-//    }
-//
-//    string recompile = "", line;
-//    size_t counter=0;
-//
-//    while(getline(file, line)){
-//        if(counter==line1){
-//             
-//        }
-//        else{
-//            recompile += line; 
-//        }
-//    }    
+int overwrite(string doc, vector<string> overwrite_s){
+    ofstream file;
+    file.open(doc);
+    
+    if(!file.is_open())
+        return 1;
+    file << "";
+    file.close();
 
-int sortFile(string doc){
+    file.open(doc, ios_base::app);
+
+    if(!file.is_open())
+        return 1;
+
+    for(size_t i = 0; i < overwrite_s.size(); i++){
+        file << overwrite_s[i] << endl;
+    }
+        file.close();
+    return 0;
+}
+
+vector<string> splitFileRow(string doc){
     ifstream file;
     file.open(doc);
 
+    vector<string> s;
+
     if(!file.is_open()){
-        cerr << "[Error]   Impossible to open \".todo\" file" << endl;
-        return 1;
+        return s;
     }
 
-    string recompile, line, last_line = "";
-    size_t counter = 0, line_number, last_line_number;
-    const size_t ascii = 48;
+    size_t lines = countLines(doc);
+
+    string line;
+
 
     while(getline(file, line)){
-        line_number = (size_t)line[0] - ascii;
-        
-        //prima deve controllare se vanno in ordine i numeri del record, poi che non ne salti nessuno 
-        
-        if(counter > 0){
-            if(last_line_number >= last_number){
-                //funzione inverti linee    
-            }
-            else{
-                
-            }
-            last_line = line;
-            last_line_number = last_number;
-        }
-
-                
+        s.push_back(line);
     }
     file.close();
-    return 0;
+
+    return s;
+}
+
+vector<string> bubbleSort(vector<string> arr){
+    string temp;
+    size_t llenght = arr.size();
+    
+    for(size_t i = 0; i < llenght; i++){
+        for(size_t j = 0; j < llenght - i - 1; j++){
+            if(arr[j] > arr[j + 1]){
+                swap(arr[j], arr[j + 1]);
+            }
+        }
+    }
+    return arr;
 }
 
 int addRecord(string doc, string record){
@@ -125,7 +129,10 @@ int main(int argc, char *argv[]) {
     const string file = ".todo";
     const auto arguments = splitArgs(argc, argv);
     const auto n_arguments = arguments.size();
-    //cout << "";
-    int e = sortFile(file);
+    
+    vector<string> s = splitFileRow(file);
+    
+    auto sorted = bubbleSort(s);
+    int e = overwrite(file, sorted);
     return 0;
 }
