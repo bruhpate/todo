@@ -88,6 +88,18 @@ vector<string> splitFileRow(string doc){
     return s;
 }
 
+vector<string> setNumber(vector<string> s){
+    string x;
+    const int ascii = 48 + 1/* +1 beacause it start from 1 and not from 0*/;
+    for(size_t i = 0; i < s.size(); i++){
+        x = s[i];
+        x[0] = (char)i + 49;
+        s[i] = x;
+        cout << s[i] << endl;
+    }
+    return s;
+}
+
 vector<string> bubbleSort(vector<string> arr){
     string temp;
     size_t llenght = arr.size();
@@ -125,9 +137,11 @@ int main(int argc, char *argv[]) {
     const auto arguments = splitArgs(argc, argv);
     const auto n_arguments = arguments.size();
     
-    vector<string> s = splitFileRow(file);
-    
+    vector<string> s = splitFileRow(file); 
     auto sorted = bubbleSort(s);
+    sorted = setNumber(s);
     int e = overwrite(file, sorted);
+    
+    
     return 0;
 }
