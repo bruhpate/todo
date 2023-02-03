@@ -78,10 +78,8 @@ vector<string> splitFileRow(string doc){
     if(!file.is_open())
         return s;
     
-
     size_t lines = countLines(doc);
     string line;
-
 
     while(getline(file, line)){
         s.push_back(line);
