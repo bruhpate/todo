@@ -1,0 +1,1 @@
+1) setNumber non va correttamente, utilizzare string split per dividere i campi e separare il lavoro tra gestione contatore e stringa

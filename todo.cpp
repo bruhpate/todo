@@ -93,7 +93,7 @@ vector<string> setNumber(vector<string> s){
     const int ascii = 48 + 1/* +1 beacause it start from 1 and not from 0*/;
     for(size_t i = 0; i < s.size(); i++){
         x = s[i];
-        x[0] = (char)i + 49;
+        x[0] = i + 49;
         s[i] = x;
     }
     return s;
@@ -115,7 +115,7 @@ vector<string> bubbleSort(vector<string> arr){
 
 int addRecord(string doc, string record){
     ofstream file;
-    file.open(doc);
+    file.open(doc, ios_base::app);
     
     string full_record;
 
@@ -124,25 +124,22 @@ int addRecord(string doc, string record){
         return 1;
     }
     else{
-        size_t row = countLines(doc) + 1;
-        full_record += row;
-        //da continuare qua    
+        vector<string> s = splitFileRow(doc);
+        full_record += (countLines(doc) + 1) + " " + record;
+        s.push_back(full_record);
+        s = bubbleSort(s);
+        s = setNumber(s);
+        return overwrite(doc, s);
     }
     return 0;
 }
-    
+
 int main(int argc, char *argv[]) {
     const string file = ".todo";
     const auto arguments = splitArgs(argc, argv);
     const auto n_arguments = arguments.size();
-     
-    //vector<string> s = splitFileRow(file); 
-    //auto sorted = bubbleSort(s);
-    //printVector(sorted);
-    //cout << endl;
-    //sorted = setNumber(sorted);
-    //printVector(sorted);
-    //int e = overwrite(file, sorted);
-     
+
+    int result = addRecord(file, arguments[0]);
+
     return 0;
 }
