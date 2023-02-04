@@ -11,8 +11,8 @@ vector<string> splitArgs(int argc, char *argv[]){
     return arguments;
 }
 
-void printVector(size_t t, vector<string> v){
-    for(size_t i = 0; i < t; i++){
+void printVector(vector<string> v){
+    for(size_t i = 0; i < v.size(); i++){
         cout << v[i] << ", ";
     }
     cout << endl;
@@ -95,7 +95,6 @@ vector<string> setNumber(vector<string> s){
         x = s[i];
         x[0] = (char)i + 49;
         s[i] = x;
-        cout << s[i] << endl;
     }
     return s;
 }
@@ -136,12 +135,14 @@ int main(int argc, char *argv[]) {
     const string file = ".todo";
     const auto arguments = splitArgs(argc, argv);
     const auto n_arguments = arguments.size();
-    
-    vector<string> s = splitFileRow(file); 
-    auto sorted = bubbleSort(s);
-    sorted = setNumber(s);
-    int e = overwrite(file, sorted);
-    
-    
+     
+    //vector<string> s = splitFileRow(file); 
+    //auto sorted = bubbleSort(s);
+    //printVector(sorted);
+    //cout << endl;
+    //sorted = setNumber(sorted);
+    //printVector(sorted);
+    //int e = overwrite(file, sorted);
+     
     return 0;
 }
