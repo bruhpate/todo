@@ -91,29 +91,37 @@ vector<string> splitFileRow(string doc){
 
 vector<string> separeLine(string s, string sep){
     vector<string> splitted;
-    auto not_found = string::npos;
+    size_t not_found = string::npos;
     size_t pos = s.find(sep);
     
     if(pos == not_found)
         return splitted;
     
     splitted.push_back(s.substr(0,pos));
+ 
     s.erase(0, pos + 1);
     splitted.push_back(s);
+ 
+
     return splitted;    
 }
 
 vector<string> setNumber(vector<string> s){
-    string x;
-    const int ascii = 48 + 1/* +1 beacause it start from 1 and not from 0*/;
-   
+    const string sep = " ";
+    const char ascii = 48 + 1;  /* 48 char = 0, 49 char = 1*/
+      // cout << s.size(); 
     for(size_t i = 0; i < s.size(); i++){
+        
         string to_split = s[i];
-        //contiuare da qua
 
-        x = s[i];
-        x[0] = i + ascii;
-        s[i] = x;
+        vector<string> temp_records = separeLine(to_split, sep);
+        
+        size_t n = stol(temp_records[0]);
+        n = i + 1;
+
+        string record = temp_records[1];
+
+        s[i] = to_string(n) + " " + record;
     }
     return s;
 }
@@ -144,8 +152,10 @@ int addRecord(string doc, string record){
     }
     else{
         vector<string> s = splitFileRow(doc);
-        full_record += (countLines(doc) + 1) + " " + record;
+        record = ' ' + record;
+        full_record += to_string(countLines(doc) + 1) + record;
         s.push_back(full_record);
+        printVector(s);
         s = bubbleSort(s);
         s = setNumber(s);
         return overwrite(doc, s);
@@ -157,7 +167,8 @@ int main(int argc, char *argv[]) {
     const string file = ".todo";
     const auto arguments = splitArgs(argc, argv);
     const auto n_arguments = arguments.size();
-
-    //int result = addRecord(file, arguments[0]);
+    
+    int result = addRecord(file, arguments[0]);
+    
     return 0;
 }
