@@ -1,5 +1,6 @@
 #include <iostream>
 #include <vector>
+#include <string>
 #include <fstream>
 using namespace std;
 
@@ -88,12 +89,30 @@ vector<string> splitFileRow(string doc){
     return s;
 }
 
+vector<string> separeLine(string s, string sep){
+    vector<string> splitted;
+    auto not_found = string::npos;
+    size_t pos = s.find(sep);
+    
+    if(pos == not_found)
+        return splitted;
+    
+    splitted.push_back(s.substr(0,pos));
+    s.erase(0, pos + 1);
+    splitted.push_back(s);
+    return splitted;    
+}
+
 vector<string> setNumber(vector<string> s){
     string x;
     const int ascii = 48 + 1/* +1 beacause it start from 1 and not from 0*/;
+   
     for(size_t i = 0; i < s.size(); i++){
+        string to_split = s[i];
+        //contiuare da qua
+
         x = s[i];
-        x[0] = i + 49;
+        x[0] = i + ascii;
         s[i] = x;
     }
     return s;
@@ -139,7 +158,6 @@ int main(int argc, char *argv[]) {
     const auto arguments = splitArgs(argc, argv);
     const auto n_arguments = arguments.size();
 
-    int result = addRecord(file, arguments[0]);
-
+    //int result = addRecord(file, arguments[0]);
     return 0;
 }
