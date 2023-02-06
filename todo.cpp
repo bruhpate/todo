@@ -97,12 +97,9 @@ vector<string> separeLine(string s, string sep){
     if(pos == not_found)
         return splitted;
     
-    splitted.push_back(s.substr(0,pos));
- 
+    splitted.push_back(s.substr(0,pos)); 
     s.erase(0, pos + 1);
     splitted.push_back(s);
- 
-
     return splitted;    
 }
 
@@ -155,7 +152,6 @@ int addRecord(string doc, string record){
         record = ' ' + record;
         full_record += to_string(countLines(doc) + 1) + record;
         s.push_back(full_record);
-        printVector(s);
         s = bubbleSort(s);
         s = setNumber(s);
         return overwrite(doc, s);
@@ -167,8 +163,8 @@ int main(int argc, char *argv[]) {
     const string file = ".todo";
     const auto arguments = splitArgs(argc, argv);
     const auto n_arguments = arguments.size();
-    
+     
     int result = addRecord(file, arguments[0]);
     
-    return 0;
+    return 1;
 }
