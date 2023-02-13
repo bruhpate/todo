@@ -161,10 +161,22 @@ int addRecord(string doc, string record){
 
 int main(int argc, char *argv[]) {
     const string file = ".todo";
-    const auto arguments = splitArgs(argc, argv);
-    const auto n_arguments = arguments.size();
-     
-    int result = addRecord(file, arguments[0]);
-    
-    return 1;
+    const vector<string> arguments = splitArgs(argc, argv);
+    const size_t n_arguments = arguments.size();
+
+    if(n_arguments == 0){
+        printList(file);
+    }
+    else if(arguments[1] != ""){
+        if(arguments[0] == "+" || arguments[0] == "add"){
+            int result = addRecord(file, arguments[1]);
+            if(result != 0){
+                cerr << "[Error]    Impossible write to file"; << endl;
+                return 1;
+            } 
+        }
+        //else if (arguments[0] == "-" || arguments[0] == "remove")
+            //funzione per cancellare una riga o più righe, es ./todo - 1,4 (cancella la riga 1 e 4) 1-4 (cancella dalla riga 1 alla riga 4) 
+    }    
+    return 0;
 }
