@@ -141,42 +141,66 @@ int addRecord(string doc, string record){
     ofstream file;
     file.open(doc, ios_base::app);
     
+    if(!file.is_open()){
+        cerr << "[Error]   Impossible to open \".todo\" file" << endl;
+        return 1;
+    }
+    
     string full_record;
+    vector<string> s = splitFileRow(doc);
+    record = ' ' + record;
+    full_record += to_string(countLines(doc) + 1) + record;
+    s.push_back(full_record);
+    s = bubbleSort(s);
+    s = setNumber(s);
+    return overwrite(doc, s);
+}
+
+int remove(string doc, string to_delete){
+    ifstream file;
+    file.open(doc);
 
     if(!file.is_open()){
         cerr << "[Error]   Impossible to open \".todo\" file" << endl;
         return 1;
     }
-    else{
-        vector<string> s = splitFileRow(doc);
-        record = ' ' + record;
-        full_record += to_string(countLines(doc) + 1) + record;
-        s.push_back(full_record);
-        s = bubbleSort(s);
-        s = setNumber(s);
-        return overwrite(doc, s);
+    
+    int llenght = to_delete
+
+    string line;
+    while(getline(file, line){
+        if(line
     }
-    return 0;
 }
 
 int main(int argc, char *argv[]) {
     const string file = ".todo";
     const vector<string> arguments = splitArgs(argc, argv);
     const size_t n_arguments = arguments.size();
+    
+    switch(n_arguments){
+        case 0:
+            printList(file);
+            break;
 
-    if(n_arguments == 0){
-        printList(file);
-    }
-    else if(arguments[1] != ""){
-        if(arguments[0] == "+" || arguments[0] == "add"){
-            int result = addRecord(file, arguments[1]);
-            if(result != 0){
-                cerr << "[Error]    Impossible write to file"; << endl;
-                return 1;
-            } 
-        }
-        //else if (arguments[0] == "-" || arguments[0] == "remove")
-            //funzione per cancellare una riga o più righe, es ./todo - 1,4 (cancella la riga 1 e 4) 1-4 (cancella dalla riga 1 alla riga 4) 
+        case 2:
+            if(arguments[0] == "--add" || arguments[0] == "-a"){
+                int result = addRecord(file, arguments[1]);
+                if(result != 0){
+                    cerr << "[Error]    Impossible write to file" << endl;
+                    return 1;
+                } 
+            }
+            else if (arguments[0] == "--remove" || arguments[0] == "-r"){
+                
+            }
+             //funzione per cancellare una riga o più righe, es ./todo - 1,4 (cancella la riga 1 e 4) 1-4 (cancella dalla riga 1 alla riga 4)
+            break;
+
+        default:
+            cout << "todo [option] [record]" << endl;
+            cout << "Example: todo -add \"buy eggs\"" << endl;
+            break;         
     }    
     return 0;
 }
